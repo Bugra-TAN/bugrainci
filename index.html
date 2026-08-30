@@ -1,54 +1,186 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>❤️</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d25">
+  <meta name="description" content="İnci'nin öfkesini boşaltıp Gurur boss'unu yendiği küçük bir barışma oyunu.">
+  <title>İnci vs. Buğra — Son Boss: Gurur</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <audio id="music" preload="auto" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
 
-<audio id="music" loop>
+  <button class="sound-button" id="soundButton" type="button" aria-label="Müziği aç">
+    <span class="sound-icon" aria-hidden="true">♪</span>
+    <span id="soundLabel">MÜZİK: KAPALI</span>
+  </button>
 
-<source src="music.mp3" type="audio/mpeg">
+  <main class="game-shell">
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <section class="screen intro-screen is-active" id="introScreen" aria-labelledby="gameTitle">
+      <div class="stars" aria-hidden="true"></div>
+      <div class="intro-content">
+        <p class="eyebrow">BUĞRA GAMES SUNAR</p>
+        <div class="title-lockup">
+          <span class="title-kicker">SON BOSS:</span>
+          <h1 id="gameTitle">GURUR</h1>
+        </div>
+        <p class="game-subtitle">İnci vs. Buğra</p>
 
-</audio>
+        <div class="mission-card">
+          <span class="mission-icon" aria-hidden="true">!</span>
+          <div>
+            <p class="mission-label">GÖREV</p>
+            <p>Buğra'nın bahanelerini patakla, öfke barını boşalt ve son kararı kalbine bırak.</p>
+          </div>
+        </div>
 
-<div id="hearts"></div>
+        <button class="primary-button pulse" id="startButton" type="button">
+          OYUNU BAŞLAT <span aria-hidden="true">→</span>
+        </button>
+        <p class="tiny-note">Biraz oyun, biraz özür, tamamı sana.</p>
+      </div>
+    </section>
 
-<div class="container">
+    <section class="screen battle-screen" id="battleScreen" aria-labelledby="battleTitle">
+      <header class="battle-header">
+        <div>
+          <p class="level-label">BÖLÜM 01</p>
+          <h2 id="battleTitle">ÖFKE ARENASI</h2>
+        </div>
+        <div class="combo-box" aria-live="polite">
+          <span>KOMBO</span>
+          <strong id="comboCount">0x</strong>
+        </div>
+      </header>
 
-<h1>💗</h1>
+      <div class="status-grid">
+        <div class="fighter-status inci-status">
+          <div class="status-heading">
+            <span>İNCİ</span>
+            <small>ÖFKE</small>
+          </div>
+          <div class="meter anger-meter" role="progressbar" aria-label="İnci'nin öfke seviyesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+            <span id="angerBar"></span>
+          </div>
+        </div>
 
-<h2>Barışalım mı?</h2>
+        <div class="round-badge" aria-hidden="true">
+          <span>ROUND</span>
+          <strong>1</strong>
+        </div>
 
-<p id="message">
-Sen benim için hâlâ çok özelsin...
-</p>
+        <div class="fighter-status bugra-status">
+          <div class="status-heading">
+            <small>BAHANE</small>
+            <span>BUĞRA</span>
+          </div>
+          <div class="meter excuse-meter" role="progressbar" aria-label="Buğra'nın bahane seviyesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+            <span id="excuseBar"></span>
+          </div>
+        </div>
+      </div>
 
-<div class="buttons">
+      <div class="arena" id="arena">
+        <div class="arena-glow" aria-hidden="true"></div>
+        <div class="fighter inci-fighter" id="inciFighter">
+          <div class="portrait inci-portrait" role="img" aria-label="Fotoğrafta İnci"></div>
+          <div class="name-tag inci-tag">İNCİ <small>★ ANA KARAKTER</small></div>
+        </div>
 
-<button id="yes">
-💖 Evet
-</button>
+        <div class="versus" aria-hidden="true">VS</div>
 
-<button id="think">
-💔 Düşüneyim
-</button>
+        <div class="fighter bugra-fighter" id="bugraFighter">
+          <div class="hit-burst" id="hitBurst" aria-hidden="true"></div>
+          <div class="portrait bugra-portrait" role="img" aria-label="Fotoğrafta Buğra"></div>
+          <div class="name-tag bugra-tag">BUĞRA <small>ÖZÜR MODU</small></div>
+        </div>
 
-</div>
+        <div class="speech-bubble" id="speechBubble" aria-live="polite">
+          Hazırım… yani, sanırım.
+        </div>
+      </div>
 
-</div>
+      <div class="battle-copy">
+        <p id="battleMessage" aria-live="polite">Bir hamle seç. Her vuruş bir bahaneyi yok eder.</p>
+        <p class="progress-copy"><span id="progressText">0</span> / 100 öfke boşaltıldı</p>
+      </div>
 
-<script src="script.js"></script>
+      <div class="moves" aria-label="Hamleler">
+        <button class="move-button" type="button" data-damage="12" data-move="bakis">
+          <kbd>1</kbd><span class="move-emoji" aria-hidden="true">👀</span>
+          <span><strong>EFSANEVİ BAKIŞ</strong><small>+12 hasar</small></span>
+        </button>
+        <button class="move-button" type="button" data-damage="18" data-move="yastik">
+          <kbd>2</kbd><span class="move-emoji" aria-hidden="true">☁️</span>
+          <span><strong>YASTIK KOMBO</strong><small>+18 hasar</small></span>
+        </button>
+        <button class="move-button" type="button" data-damage="24" data-move="terlik">
+          <kbd>3</kbd><span class="move-emoji" aria-hidden="true">🩴</span>
+          <span><strong>UÇAN TERLİK</strong><small>+24 hasar</small></span>
+        </button>
+        <button class="move-button special-move" type="button" data-damage="30" data-move="laf">
+          <kbd>4</kbd><span class="move-emoji" aria-hidden="true">⚡</span>
+          <span><strong>LAFI OTURT</strong><small>+30 hasar</small></span>
+        </button>
+      </div>
+      <p class="keyboard-hint">Hamleleri butonlardan veya 1–4 tuşlarıyla yapabilirsin.</p>
+    </section>
 
+    <section class="screen boss-screen" id="bossScreen" aria-labelledby="bossTitle">
+      <div class="boss-content">
+        <p class="eyebrow">GİZLİ BÖLÜM AÇILDI</p>
+        <div class="boss-icon" aria-hidden="true">♛</div>
+        <h2 id="bossTitle">GERÇEK SON BOSS</h2>
+        <p class="boss-name">GURUR</p>
+        <p class="boss-description">
+          Meğer yenilmesi gereken İnci ya da Buğra değilmiş.<br>
+          Aramıza giren şu inatçı gururmuş.
+        </p>
+        <button class="primary-button" id="defeatBossButton" type="button">
+          GURURU YEN <span aria-hidden="true">♥</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="screen finale-screen" id="finaleScreen" aria-labelledby="finalTitle">
+      <div class="final-card">
+        <div class="photo-frame">
+          <img src="photo.jpg" alt="İnci ve Buğra'nın birlikte çekilmiş bir fotoğrafı">
+          <span class="photo-sticker">EN GÜZEL BÖLÜMÜMÜZ</span>
+        </div>
+        <div class="final-copy">
+          <p class="eyebrow">BÖLÜM TAMAMLANDI</p>
+          <h2 id="finalTitle">Ama hikâyemiz<br>bitmek zorunda değil.</h2>
+          <p>
+            Hatalarımı bir oyunla küçültmeye çalışmıyorum. Seni özledim, seni dinlemek ve
+            kırdığım yerleri gerçekten onarmak istiyorum. Bir şans daha verirsen bu kez
+            sözlerimle değil, davranışlarımla göstereceğim.
+          </p>
+          <p class="signature">— Buğra</p>
+          <div class="final-actions">
+            <button class="primary-button yes-button" id="yesButton" type="button">KONUŞALIM MI? ♥</button>
+            <button class="secondary-button" id="timeButton" type="button">BİRAZ ZAMANA İHTİYACIM VAR</button>
+          </div>
+          <p class="choice-note">Hangi seçeneği seçersen seç, kararına saygı duyacağım.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen response-screen" id="responseScreen" aria-labelledby="responseTitle">
+      <div class="response-card">
+        <div class="response-icon" id="responseIcon" aria-hidden="true">♥</div>
+        <p class="eyebrow" id="responseEyebrow">YENİ BÖLÜM AÇILDI</p>
+        <h2 id="responseTitle">Teşekkür ederim, İnci.</h2>
+        <p id="responseMessage">Bu şansı çok kıymetli tutacağım. Hazır olduğunda seni dinlemeye hazırım.</p>
+        <button class="secondary-button" id="replayButton" type="button">OYUNU TEKRAR OYNA</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
