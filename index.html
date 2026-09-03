@@ -1,186 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#100d25">
-  <meta name="description" content="İnci'nin öfkesini boşaltıp Gurur boss'unu yendiği küçük bir barışma oyunu.">
-  <title>İnci vs. Buğra — Son Boss: Gurur</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070b18">
+  <meta name="description" content="İnci ve Buğra'nın anı evrenlerinde geçen interaktif macera oyunu.">
+  <meta property="og:title" content="Zaman Yarığı: Anı Avcıları">
+  <meta property="og:description" content="Karakterini seç, altı anı evrenini kurtar ve Zaman Hatası'nı yen.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zaman-yarigi-ani-avcilari.bugra-tan-376.chatgpt.site">
+  <meta property="og:image" content="https://zaman-yarigi-ani-avcilari.bugra-tan-376.chatgpt.site/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zaman Yarığı: Anı Avcıları">
+  <meta name="twitter:description" content="Karakterini seç, altı anı evrenini kurtar ve Zaman Hatası'nı yen.">
+  <meta name="twitter:image" content="https://zaman-yarigi-ani-avcilari.bugra-tan-376.chatgpt.site/og.png">
+  <title>Zaman Yarığı: Anı Avcıları</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <audio id="music" preload="auto" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
-
-  <button class="sound-button" id="soundButton" type="button" aria-label="Müziği aç">
-    <span class="sound-icon" aria-hidden="true">♪</span>
-    <span id="soundLabel">MÜZİK: KAPALI</span>
-  </button>
-
-  <main class="game-shell">
-    <div class="confetti" id="confetti" aria-hidden="true"></div>
-    <section class="screen intro-screen is-active" id="introScreen" aria-labelledby="gameTitle">
-      <div class="stars" aria-hidden="true"></div>
-      <div class="intro-content">
-        <p class="eyebrow">BUĞRA GAMES SUNAR</p>
-        <div class="title-lockup">
-          <span class="title-kicker">SON BOSS:</span>
-          <h1 id="gameTitle">GURUR</h1>
+  <audio id="music" preload="auto" loop><source src="music.mp3" type="audio/mpeg"></audio>
+  <div class="game-frame" id="gameFrame">
+    <div class="ambient-grid" aria-hidden="true"></div><div class="noise" aria-hidden="true"></div>
+    <header class="topbar">
+      <button class="brand" id="homeButton" type="button" aria-label="Ana menüye dön"><span class="brand-mark">Z</span><span><strong>ZAMAN YARIĞI</strong><small>ANI AVCILARI</small></span></button>
+      <div class="top-actions"><button class="icon-button" id="soundButton" type="button" aria-label="Müziği aç"><span id="soundIcon">♪</span><span class="button-label" id="soundLabel">SES KAPALI</span></button><button class="icon-button is-hidden" id="changePlayerButton" type="button">↺ <span class="button-label">KARAKTER</span></button></div>
+    </header>
+    <main>
+      <section class="screen selection-screen is-active" id="selectionScreen" aria-labelledby="selectionTitle">
+        <div class="selection-copy"><p class="overline"><span></span> ZAMAN ÇİZGİSİ: KRİTİK <span></span></p><h1 id="selectionTitle"><span>KİM</span> OYNUYOR?</h1><p class="selection-lead">Anılar parçalandı. Karakterini seç, yeteneğini kuşan ve altı farklı evrende zamanın peşine düş.</p></div>
+        <div class="character-grid" aria-label="Oyuncu seçimi">
+          <button class="character-card inci-card" type="button" data-character="inci"><span class="card-scan" aria-hidden="true"></span><span class="character-photo inci-photo" role="img" aria-label="İnci"></span><span class="character-info"><span class="character-index">OYUNCU 01</span><strong>İNCİ</strong><span class="ability"><b>✦ SEZGİ</b> Gizli ipuçlarını ortaya çıkarır</span><span class="select-cta">BU ROTAYI SEÇ <i>→</i></span></span></button>
+          <div class="choice-divider" aria-hidden="true"><span>VEYA</span></div>
+          <button class="character-card bugra-card" type="button" data-character="bugra"><span class="card-scan" aria-hidden="true"></span><span class="character-photo bugra-photo" role="img" aria-label="Buğra"></span><span class="character-info"><span class="character-index">OYUNCU 02</span><strong>BUĞRA</strong><span class="ability"><b>⚡ CESARET</b> Zamanı kendi lehine büker</span><span class="select-cta">BU ROTAYI SEÇ <i>→</i></span></span></button>
         </div>
-        <p class="game-subtitle">İnci vs. Buğra</p>
-
-        <div class="mission-card">
-          <span class="mission-icon" aria-hidden="true">!</span>
-          <div>
-            <p class="mission-label">GÖREV</p>
-            <p>Buğra'nın bahanelerini patakla, öfke barını boşalt ve son kararı kalbine bırak.</p>
-          </div>
+        <div class="save-status" id="saveStatus"><span class="status-light"></span><span>İKİ ROTA • ALTI EVREN • BİR GİZLİ FİNAL</span></div>
+      </section>
+      <section class="screen briefing-screen" id="briefingScreen" aria-labelledby="briefingTitle">
+        <div class="briefing-visual"><div class="portal-rings" aria-hidden="true"><span></span><span></span><span></span></div><img src="photo.jpg" alt="İnci ve Buğra parkta"><div class="briefing-character" id="briefingCharacter">İNCİ // SEZGİ UZMANI</div></div>
+        <div class="briefing-copy"><p class="overline">GÖREV DOSYASI // 00</p><h2 id="briefingTitle">ZAMAN ÇİZGİSİ<br><em>PARÇALANDI.</em></h2><p id="briefingStory"></p><div class="mission-stats"><span><b>6</b><small>EVREN</small></span><span><b>∞</b><small>OLASILIK</small></span><span><b>1</b><small>SON BOSS</small></span></div><button class="primary-button" id="enterMapButton" type="button">PORTALI AÇ <span>→</span></button></div>
+      </section>
+      <section class="screen map-screen" id="mapScreen" aria-labelledby="mapTitle">
+        <div class="game-hud"><div class="hud-player"><span class="hud-avatar" id="hudAvatar"></span><span><small>AKTİF AVCI</small><b id="hudPlayerName">İNCİ</b></span></div><div class="hud-center"><small>ZAMAN ÇİZGİSİ</small><div class="hud-progress"><span id="hudProgressBar"></span></div><b><span id="completedCount">0</span>/6 PARÇA</b></div><div class="hud-score"><small>TOPLAM SKOR</small><b id="hudScore">0000</b></div></div>
+        <div class="map-heading"><div><p class="overline">MERKEZ ÜS // 2026</p><h2 id="mapTitle">ANI HARİTASI</h2></div><p id="mapHint">İlk açık zaman yarığını seç.</p></div>
+        <div class="timeline-map" id="timelineMap"><div class="timeline-line" aria-hidden="true"><span id="timelineFill"></span></div>
+          <button class="world-node is-unlocked" data-level="0" type="button"><span class="node-number">01</span><span class="node-photo campus-bg"></span><span class="node-copy"><small>BAŞKENT KAMPÜSÜ</small><b>YARIK AVI</b><em>Gizli enerji izlerini bul</em></span><span class="node-state">AÇIK</span></button>
+          <button class="world-node" data-level="1" type="button"><span class="node-number">02</span><span class="node-photo graduation-bg"></span><span class="node-copy"><small>MEZUNİYET KAOSU</small><b>AKIŞ ŞİFRESİ</b><em>Zaman dizisini onar</em></span><span class="node-state">KİLİTLİ</span></button>
+          <button class="world-node" data-level="2" type="button"><span class="node-number">03</span><span class="node-photo castle-bg"></span><span class="node-copy"><small>MASAL ŞATOSU</small><b>KRONOLABİRENT</b><em>Çıkış portalına ulaş</em></span><span class="node-state">KİLİTLİ</span></button>
+          <button class="world-node" data-level="3" type="button"><span class="node-number">04</span><span class="node-photo park-bg"></span><span class="node-copy"><small>PARK PİKNİĞİ</small><b>HAFIZA MATRİSİ</b><em>Kayıp çiftleri eşleştir</em></span><span class="node-state">KİLİTLİ</span></button>
+          <button class="world-node" data-level="4" type="button"><span class="node-number">05</span><span class="node-photo cafe-bg"></span><span class="node-copy"><small>KAFE OPERASYONU</small><b>SİPARİŞ PROTOKOLÜ</b><em>Diziyi hatırla ve tekrarla</em></span><span class="node-state">KİLİTLİ</span></button>
+          <button class="world-node" data-level="5" type="button"><span class="node-number">06</span><span class="node-photo glitch-bg"></span><span class="node-copy"><small>BOZULAN KARE</small><b>FOTOĞRAF PARADOKSU</b><em>Son anıyı birleştir</em></span><span class="node-state">KİLİTLİ</span></button>
         </div>
-
-        <button class="primary-button pulse" id="startButton" type="button">
-          OYUNU BAŞLAT <span aria-hidden="true">→</span>
-        </button>
-        <p class="tiny-note">Biraz oyun, biraz özür, tamamı sana.</p>
-      </div>
-    </section>
-
-    <section class="screen battle-screen" id="battleScreen" aria-labelledby="battleTitle">
-      <header class="battle-header">
-        <div>
-          <p class="level-label">BÖLÜM 01</p>
-          <h2 id="battleTitle">ÖFKE ARENASI</h2>
-        </div>
-        <div class="combo-box" aria-live="polite">
-          <span>KOMBO</span>
-          <strong id="comboCount">0x</strong>
-        </div>
-      </header>
-
-      <div class="status-grid">
-        <div class="fighter-status inci-status">
-          <div class="status-heading">
-            <span>İNCİ</span>
-            <small>ÖFKE</small>
-          </div>
-          <div class="meter anger-meter" role="progressbar" aria-label="İnci'nin öfke seviyesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
-            <span id="angerBar"></span>
-          </div>
-        </div>
-
-        <div class="round-badge" aria-hidden="true">
-          <span>ROUND</span>
-          <strong>1</strong>
-        </div>
-
-        <div class="fighter-status bugra-status">
-          <div class="status-heading">
-            <small>BAHANE</small>
-            <span>BUĞRA</span>
-          </div>
-          <div class="meter excuse-meter" role="progressbar" aria-label="Buğra'nın bahane seviyesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
-            <span id="excuseBar"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="arena" id="arena">
-        <div class="arena-glow" aria-hidden="true"></div>
-        <div class="fighter inci-fighter" id="inciFighter">
-          <div class="portrait inci-portrait" role="img" aria-label="Fotoğrafta İnci"></div>
-          <div class="name-tag inci-tag">İNCİ <small>★ ANA KARAKTER</small></div>
-        </div>
-
-        <div class="versus" aria-hidden="true">VS</div>
-
-        <div class="fighter bugra-fighter" id="bugraFighter">
-          <div class="hit-burst" id="hitBurst" aria-hidden="true"></div>
-          <div class="portrait bugra-portrait" role="img" aria-label="Fotoğrafta Buğra"></div>
-          <div class="name-tag bugra-tag">BUĞRA <small>ÖZÜR MODU</small></div>
-        </div>
-
-        <div class="speech-bubble" id="speechBubble" aria-live="polite">
-          Hazırım… yani, sanırım.
-        </div>
-      </div>
-
-      <div class="battle-copy">
-        <p id="battleMessage" aria-live="polite">Bir hamle seç. Her vuruş bir bahaneyi yok eder.</p>
-        <p class="progress-copy"><span id="progressText">0</span> / 100 öfke boşaltıldı</p>
-      </div>
-
-      <div class="moves" aria-label="Hamleler">
-        <button class="move-button" type="button" data-damage="12" data-move="bakis">
-          <kbd>1</kbd><span class="move-emoji" aria-hidden="true">👀</span>
-          <span><strong>EFSANEVİ BAKIŞ</strong><small>+12 hasar</small></span>
-        </button>
-        <button class="move-button" type="button" data-damage="18" data-move="yastik">
-          <kbd>2</kbd><span class="move-emoji" aria-hidden="true">☁️</span>
-          <span><strong>YASTIK KOMBO</strong><small>+18 hasar</small></span>
-        </button>
-        <button class="move-button" type="button" data-damage="24" data-move="terlik">
-          <kbd>3</kbd><span class="move-emoji" aria-hidden="true">🩴</span>
-          <span><strong>UÇAN TERLİK</strong><small>+24 hasar</small></span>
-        </button>
-        <button class="move-button special-move" type="button" data-damage="30" data-move="laf">
-          <kbd>4</kbd><span class="move-emoji" aria-hidden="true">⚡</span>
-          <span><strong>LAFI OTURT</strong><small>+30 hasar</small></span>
-        </button>
-      </div>
-      <p class="keyboard-hint">Hamleleri butonlardan veya 1–4 tuşlarıyla yapabilirsin.</p>
-    </section>
-
-    <section class="screen boss-screen" id="bossScreen" aria-labelledby="bossTitle">
-      <div class="boss-content">
-        <p class="eyebrow">GİZLİ BÖLÜM AÇILDI</p>
-        <div class="boss-icon" aria-hidden="true">♛</div>
-        <h2 id="bossTitle">GERÇEK SON BOSS</h2>
-        <p class="boss-name">GURUR</p>
-        <p class="boss-description">
-          Meğer yenilmesi gereken İnci ya da Buğra değilmiş.<br>
-          Aramıza giren şu inatçı gururmuş.
-        </p>
-        <button class="primary-button" id="defeatBossButton" type="button">
-          GURURU YEN <span aria-hidden="true">♥</span>
-        </button>
-      </div>
-    </section>
-
-    <section class="screen finale-screen" id="finaleScreen" aria-labelledby="finalTitle">
-      <div class="final-card">
-        <div class="photo-frame">
-          <img src="photo.jpg" alt="İnci ve Buğra'nın birlikte çekilmiş bir fotoğrafı">
-          <span class="photo-sticker">EN GÜZEL BÖLÜMÜMÜZ</span>
-        </div>
-        <div class="final-copy">
-          <p class="eyebrow">BÖLÜM TAMAMLANDI</p>
-          <h2 id="finalTitle">Ama hikâyemiz<br>bitmek zorunda değil.</h2>
-          <p>
-            Hatalarımı bir oyunla küçültmeye çalışmıyorum. Seni özledim, seni dinlemek ve
-            kırdığım yerleri gerçekten onarmak istiyorum. Bir şans daha verirsen bu kez
-            sözlerimle değil, davranışlarımla göstereceğim.
-          </p>
-          <p class="signature">— Buğra</p>
-          <div class="final-actions">
-            <button class="primary-button yes-button" id="yesButton" type="button">KONUŞALIM MI? ♥</button>
-            <button class="secondary-button" id="timeButton" type="button">BİRAZ ZAMANA İHTİYACIM VAR</button>
-          </div>
-          <p class="choice-note">Hangi seçeneği seçersen seç, kararına saygı duyacağım.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="screen response-screen" id="responseScreen" aria-labelledby="responseTitle">
-      <div class="response-card">
-        <div class="response-icon" id="responseIcon" aria-hidden="true">♥</div>
-        <p class="eyebrow" id="responseEyebrow">YENİ BÖLÜM AÇILDI</p>
-        <h2 id="responseTitle">Teşekkür ederim, İnci.</h2>
-        <p id="responseMessage">Bu şansı çok kıymetli tutacağım. Hazır olduğunda seni dinlemeye hazırım.</p>
-        <button class="secondary-button" id="replayButton" type="button">OYUNU TEKRAR OYNA</button>
-      </div>
-    </section>
-  </main>
-
+      </section>
+      <section class="screen level-screen" id="levelScreen" aria-labelledby="levelTitle"><div class="level-topbar"><button class="back-button" id="backToMapButton" type="button">← HARİTA</button><div class="level-identity"><small id="levelCode">EVREN 01</small><h2 id="levelTitle">YARIK AVI</h2></div><div class="level-metrics"><span><small>SKOR</small><b id="levelScore">0000</b></span><span><small>SÜRE</small><b id="levelTimer">--</b></span></div></div><div class="level-stage" id="levelStage"></div><div class="level-footer"><p id="levelInstruction">Görev yükleniyor…</p><button class="ability-button" id="abilityButton" type="button"><span id="abilityIcon">✦</span><span><small>ÖZEL YETENEK</small><b id="abilityName">SEZGİ</b></span><em id="abilityCharge">HAZIR</em></button></div></section>
+      <section class="screen boss-screen" id="bossScreen" aria-labelledby="bossTitle"><div class="boss-photo-wall" aria-hidden="true" id="bossPhotoWall"></div><div class="boss-overlay"></div><div class="boss-content"><p class="overline danger">ANOMALİ SEVİYESİ // MAKSİMUM</p><h2 id="bossTitle">ZAMAN<br><em>HATASI</em></h2><p id="bossIntro">Bütün parçalar tamam. Fakat onları yutan hata hâlâ burada.</p><div class="boss-health"><span id="bossHealthBar"></span></div><p class="boss-health-label"><span id="bossHits">0</span>/3 KRİTİK VURUŞ</p><div class="timing-game" id="timingGame"><div class="hit-zone" id="hitZone"></div><div class="timing-cursor" id="timingCursor"></div></div><button class="primary-button danger-button" id="strikeButton" type="button">ŞİMDİ VUR <span>⚡</span></button><p class="boss-tip" id="bossTip">İmleç parlak alanın içindeyken vur.</p></div></section>
+      <section class="screen finale-screen" id="finaleScreen" aria-labelledby="finaleTitle"><div class="final-collage" id="finalCollage" aria-hidden="true"></div><div class="final-panel"><p class="overline">ZAMAN ÇİZGİSİ // KARARLI</p><h2 id="finaleTitle">GÖREV<br><em>TAMAMLANDI.</em></h2><p id="finaleMessage"></p><div class="final-score"><small>ROTA SKORU</small><strong id="finalScore">0000</strong><span id="finalRank">S</span></div><div class="route-status" id="routeStatus"></div><div class="final-actions"><button class="primary-button" id="otherRouteButton" type="button">DİĞER ROTAYI OYNA <span>→</span></button><button class="secondary-button" id="replayRouteButton" type="button">BU ROTAYI TEKRARLA</button></div></div></section>
+      <section class="screen secret-screen" id="secretScreen" aria-labelledby="secretTitle"><div class="secret-photo"><img src="photo.jpg" alt="İnci ve Buğra birlikte"><span>GERÇEK ZAMAN ÇİZGİSİ</span></div><div class="secret-copy"><p class="overline">GİZLİ FİNAL AÇILDI</p><h2 id="secretTitle">İKİ ROTA.<br><em>TEK TAKIM.</em></h2><p>İnci'nin sezgisi ve Buğra'nın cesareti aynı zaman çizgisinde buluştu. Bazı maceralar tek kişiyle başlar; ama en iyi bölümleri iki kişi tamamlar.</p><button class="primary-button" id="secretReplayButton" type="button">YENİ MACERA <span>↺</span></button></div></section>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div><div class="transition-veil" id="transitionVeil" aria-hidden="true"><span>ZAMAN ATLAMASI</span></div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
