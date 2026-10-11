@@ -3,61 +3,159 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#070b18">
-  <meta name="description" content="İnci ve Buğra'nın anı evrenlerinde geçen interaktif macera oyunu.">
-  <meta property="og:title" content="Zaman Yarığı: Anı Avcıları">
-  <meta property="og:description" content="Karakterini seç, altı anı evrenini kurtar ve Zaman Hatası'nı yen.">
+  <meta name="theme-color" content="#f6eee4">
+  <meta name="description" content="İnci ve Buğra için; uzaklığın kısaldığı, umutla ve birlikte yazılan küçük bir hikâye.">
+  <meta property="og:title" content="Uzak Değil, Yaklaşıyoruz">
+  <meta property="og:description" content="Rize'den Eskişehir'e, oradan Ankara'ya uzanan bizim hikâyemiz.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://zaman-yarigi-ani-avcilari.bugra-tan-376.chatgpt.site">
-  <meta property="og:image" content="https://zaman-yarigi-ani-avcilari.bugra-tan-376.chatgpt.site/og.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Zaman Yarığı: Anı Avcıları">
-  <meta name="twitter:description" content="Karakterini seç, altı anı evrenini kurtar ve Zaman Hatası'nı yen.">
-  <meta name="twitter:image" content="https://zaman-yarigi-ani-avcilari.bugra-tan-376.chatgpt.site/og.png">
-  <title>Zaman Yarığı: Anı Avcıları</title>
+  <meta property="og:image" content="photo.jpg">
+  <title>Uzak Değil, Yaklaşıyoruz — İnci & Buğra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Gloock&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <audio id="music" preload="auto" loop><source src="music.mp3" type="audio/mpeg"></audio>
-  <div class="game-frame" id="gameFrame">
-    <div class="ambient-grid" aria-hidden="true"></div><div class="noise" aria-hidden="true"></div>
-    <header class="topbar">
-      <button class="brand" id="homeButton" type="button" aria-label="Ana menüye dön"><span class="brand-mark">Z</span><span><strong>ZAMAN YARIĞI</strong><small>ANI AVCILARI</small></span></button>
-      <div class="top-actions"><button class="icon-button" id="soundButton" type="button" aria-label="Müziği aç"><span id="soundIcon">♪</span><span class="button-label" id="soundLabel">SES KAPALI</span></button><button class="icon-button is-hidden" id="changePlayerButton" type="button">↺ <span class="button-label">KARAKTER</span></button></div>
-    </header>
-    <main>
-      <section class="screen selection-screen is-active" id="selectionScreen" aria-labelledby="selectionTitle">
-        <div class="selection-copy"><p class="overline"><span></span> ZAMAN ÇİZGİSİ: KRİTİK <span></span></p><h1 id="selectionTitle"><span>KİM</span> OYNUYOR?</h1><p class="selection-lead">Anılar parçalandı. Karakterini seç, yeteneğini kuşan ve altı farklı evrende zamanın peşine düş.</p></div>
-        <div class="character-grid" aria-label="Oyuncu seçimi">
-          <button class="character-card inci-card" type="button" data-character="inci"><span class="card-scan" aria-hidden="true"></span><span class="character-photo inci-photo" role="img" aria-label="İnci"></span><span class="character-info"><span class="character-index">OYUNCU 01</span><strong>İNCİ</strong><span class="ability"><b>✦ SEZGİ</b> Gizli ipuçlarını ortaya çıkarır</span><span class="select-cta">BU ROTAYI SEÇ <i>→</i></span></span></button>
-          <div class="choice-divider" aria-hidden="true"><span>VEYA</span></div>
-          <button class="character-card bugra-card" type="button" data-character="bugra"><span class="card-scan" aria-hidden="true"></span><span class="character-photo bugra-photo" role="img" aria-label="Buğra"></span><span class="character-info"><span class="character-index">OYUNCU 02</span><strong>BUĞRA</strong><span class="ability"><b>⚡ CESARET</b> Zamanı kendi lehine büker</span><span class="select-cta">BU ROTAYI SEÇ <i>→</i></span></span></button>
+  <audio id="music" preload="metadata" loop><source src="music.mp3" type="audio/mpeg"></audio>
+  <div class="paper-noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="monogram" href="#top" aria-label="Başa dön">İ<span>+</span>B</a>
+    <p>Rize · Eskişehir · <strong>Ankara</strong></p>
+    <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">
+      <span class="sound-waves" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span id="soundLabel">Şarkımızı aç</span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">İnci'ye, Buğra'dan</p>
+        <h1 id="heroTitle">Uzak değiliz.<br><em>Yaklaşıyoruz.</em></h1>
+        <p class="hero-lead">Uzun zamandır iki ayrı şehirde aynı şeyi özlüyoruz. Şimdi önümüzde yeni bir sayfa var: Ankara.</p>
+        <button class="primary-cta" id="startJourney" type="button">Bizim yarınımıza bak <span>↓</span></button>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="sun-stamp" aria-hidden="true">YAKINDA<br><b>1 SAAT</b></div>
+        <figure class="hero-photo">
+          <img src="WhatsApp Image 2026-09-03 at 03.39.22 (3).jpeg" alt="İnci ve Buğra parkta birlikte">
+          <figcaption>Biz, aynı karede en güzeliz.</figcaption>
+        </figure>
+        <span class="scribble-heart" aria-hidden="true">♡</span>
+      </div>
+      <div class="route-line" aria-label="Rize'den Ankara'ya ve Eskişehir'den Ankara'ya yaklaşan rota">
+        <span class="route-city route-rize">Rize<small>Buğra</small></span>
+        <span class="route-path left"><i></i></span>
+        <span class="route-city route-ankara">Ankara<small>yeni başlangıç</small></span>
+        <span class="route-path right"><i></i></span>
+        <span class="route-city route-eskisehir">Eskişehir<small>İnci</small></span>
+      </div>
+    </section>
+
+    <section class="truth-section" id="story" aria-labelledby="truthTitle">
+      <div class="section-number">01</div>
+      <div class="truth-copy reveal">
+        <p class="eyebrow">Sana dürüstçe</p>
+        <h2 id="truthTitle">Bu yolun seni<br><em>yorduğunu biliyorum.</em></h2>
+      </div>
+      <div class="truth-body reveal">
+        <p>Bazen bir tartışmanın ardından sana sarılamamak, her şeyi olduğundan daha ağır yaptı. Bir telefon ekranı; sesimizi taşıdı ama sessizliğimizi çözemedi.</p>
+        <p>Bu site “hemen iyi ol” demek için değil. Hissettiklerini küçültmek için hiç değil. Sana sadece şunu göstermek istiyorum: <strong>aynı yerde saymıyoruz.</strong></p>
+      </div>
+      <blockquote class="reveal">“Ankara bütün sorunları sihirli şekilde çözmeyecek. Ama artık her şeyi uzaktan çözmek zorunda kalmayacağız.”</blockquote>
+    </section>
+
+    <section class="memory-strip" aria-label="Birlikte çekilmiş fotoğraflarımız">
+      <figure class="memory-card tilt-left reveal">
+        <img src="WhatsApp Image 2026-09-03 at 03.39.22.jpeg" alt="İnci ve Buğra mezuniyet gününde">
+        <figcaption>Yan yana olduğumuz günler</figcaption>
+      </figure>
+      <figure class="memory-card tall reveal">
+        <img src="WhatsApp Image 2026-09-03 at 03.39.22 (2).jpeg" alt="İnci ve Buğra masal şatosunun önünde">
+        <figcaption>Biraz gerçek, biraz masal</figcaption>
+      </figure>
+      <figure class="memory-card tilt-right reveal">
+        <img src="WhatsApp Image 2026-09-03 at 03.39.22 (1).jpeg" alt="İnci ve Buğra mezuniyette birlikte">
+        <figcaption>Her önemli anda, birlikte</figcaption>
+      </figure>
+    </section>
+
+    <section class="quiz-section" id="quiz" aria-labelledby="quizTitle">
+      <div class="quiz-intro reveal">
+        <div class="section-number coral">02</div>
+        <p class="eyebrow">Şimdi sıra sende</p>
+        <h2 id="quizTitle">Kalbinden geçen<br><em>rotayı seç.</em></h2>
+        <p>Doğru cevap yok. Seni daha iyi anlayabilmem için birkaç küçük seçim var.</p>
+      </div>
+      <div class="quiz-shell reveal" id="quizShell">
+        <div class="quiz-progress" aria-label="Soru ilerlemesi"><span id="progressBar"></span></div>
+        <div class="quiz-meta">
+          <span id="questionCount">1 / 4</span>
+          <button id="restartQuiz" class="text-button" type="button">Baştan başla</button>
         </div>
-        <div class="save-status" id="saveStatus"><span class="status-light"></span><span>İKİ ROTA • ALTI EVREN • BİR GİZLİ FİNAL</span></div>
-      </section>
-      <section class="screen briefing-screen" id="briefingScreen" aria-labelledby="briefingTitle">
-        <div class="briefing-visual"><div class="portal-rings" aria-hidden="true"><span></span><span></span><span></span></div><img src="photo.jpg" alt="İnci ve Buğra parkta"><div class="briefing-character" id="briefingCharacter">İNCİ // SEZGİ UZMANI</div></div>
-        <div class="briefing-copy"><p class="overline">GÖREV DOSYASI // 00</p><h2 id="briefingTitle">ZAMAN ÇİZGİSİ<br><em>PARÇALANDI.</em></h2><p id="briefingStory"></p><div class="mission-stats"><span><b>6</b><small>EVREN</small></span><span><b>∞</b><small>OLASILIK</small></span><span><b>1</b><small>SON BOSS</small></span></div><button class="primary-button" id="enterMapButton" type="button">PORTALI AÇ <span>→</span></button></div>
-      </section>
-      <section class="screen map-screen" id="mapScreen" aria-labelledby="mapTitle">
-        <div class="game-hud"><div class="hud-player"><span class="hud-avatar" id="hudAvatar"></span><span><small>AKTİF AVCI</small><b id="hudPlayerName">İNCİ</b></span></div><div class="hud-center"><small>ZAMAN ÇİZGİSİ</small><div class="hud-progress"><span id="hudProgressBar"></span></div><b><span id="completedCount">0</span>/6 PARÇA</b></div><div class="hud-score"><small>TOPLAM SKOR</small><b id="hudScore">0000</b></div></div>
-        <div class="map-heading"><div><p class="overline">MERKEZ ÜS // 2026</p><h2 id="mapTitle">ANI HARİTASI</h2></div><p id="mapHint">İlk açık zaman yarığını seç.</p></div>
-        <div class="timeline-map" id="timelineMap"><div class="timeline-line" aria-hidden="true"><span id="timelineFill"></span></div>
-          <button class="world-node is-unlocked" data-level="0" type="button"><span class="node-number">01</span><span class="node-photo campus-bg"></span><span class="node-copy"><small>BAŞKENT KAMPÜSÜ</small><b>YARIK AVI</b><em>Gizli enerji izlerini bul</em></span><span class="node-state">AÇIK</span></button>
-          <button class="world-node" data-level="1" type="button"><span class="node-number">02</span><span class="node-photo graduation-bg"></span><span class="node-copy"><small>MEZUNİYET KAOSU</small><b>AKIŞ ŞİFRESİ</b><em>Zaman dizisini onar</em></span><span class="node-state">KİLİTLİ</span></button>
-          <button class="world-node" data-level="2" type="button"><span class="node-number">03</span><span class="node-photo castle-bg"></span><span class="node-copy"><small>MASAL ŞATOSU</small><b>KRONOLABİRENT</b><em>Çıkış portalına ulaş</em></span><span class="node-state">KİLİTLİ</span></button>
-          <button class="world-node" data-level="3" type="button"><span class="node-number">04</span><span class="node-photo park-bg"></span><span class="node-copy"><small>PARK PİKNİĞİ</small><b>HAFIZA MATRİSİ</b><em>Kayıp çiftleri eşleştir</em></span><span class="node-state">KİLİTLİ</span></button>
-          <button class="world-node" data-level="4" type="button"><span class="node-number">05</span><span class="node-photo cafe-bg"></span><span class="node-copy"><small>KAFE OPERASYONU</small><b>SİPARİŞ PROTOKOLÜ</b><em>Diziyi hatırla ve tekrarla</em></span><span class="node-state">KİLİTLİ</span></button>
-          <button class="world-node" data-level="5" type="button"><span class="node-number">06</span><span class="node-photo glitch-bg"></span><span class="node-copy"><small>BOZULAN KARE</small><b>FOTOĞRAF PARADOKSU</b><em>Son anıyı birleştir</em></span><span class="node-state">KİLİTLİ</span></button>
+        <div class="quiz-stage" id="quizStage" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="jar-section" aria-labelledby="jarTitle">
+      <div class="jar-copy reveal">
+        <div class="section-number blue">03</div>
+        <p class="eyebrow">Zor bir gün için</p>
+        <h2 id="jarTitle">Bir tutam umut<br><em>çekmecesi.</em></h2>
+        <p>Canın ne zaman isterse bir not çek. Aynı nota yeniden denk gelsen bile belki o gün başka bir yerine iyi gelir.</p>
+        <button class="secondary-cta" id="drawNote" type="button">Bana bir not ver <span>✦</span></button>
+      </div>
+      <div class="note-jar reveal" aria-live="polite">
+        <div class="jar-lid"></div>
+        <div class="jar-glass">
+          <span class="paper-slip one"></span><span class="paper-slip two"></span><span class="paper-slip three"></span>
+          <p id="hopeNote">“Bugün sadece dayanman bile yeter. Her şeyi bugün çözmek zorunda değilsin.”</p>
         </div>
-      </section>
-      <section class="screen level-screen" id="levelScreen" aria-labelledby="levelTitle"><div class="level-topbar"><button class="back-button" id="backToMapButton" type="button">← HARİTA</button><div class="level-identity"><small id="levelCode">EVREN 01</small><h2 id="levelTitle">YARIK AVI</h2></div><div class="level-metrics"><span><small>SKOR</small><b id="levelScore">0000</b></span><span><small>SÜRE</small><b id="levelTimer">--</b></span></div></div><div class="level-stage" id="levelStage"></div><div class="level-footer"><p id="levelInstruction">Görev yükleniyor…</p><button class="ability-button" id="abilityButton" type="button"><span id="abilityIcon">✦</span><span><small>ÖZEL YETENEK</small><b id="abilityName">SEZGİ</b></span><em id="abilityCharge">HAZIR</em></button></div></section>
-      <section class="screen boss-screen" id="bossScreen" aria-labelledby="bossTitle"><div class="boss-photo-wall" aria-hidden="true" id="bossPhotoWall"></div><div class="boss-overlay"></div><div class="boss-content"><p class="overline danger">ANOMALİ SEVİYESİ // MAKSİMUM</p><h2 id="bossTitle">ZAMAN<br><em>HATASI</em></h2><p id="bossIntro">Bütün parçalar tamam. Fakat onları yutan hata hâlâ burada.</p><div class="boss-health"><span id="bossHealthBar"></span></div><p class="boss-health-label"><span id="bossHits">0</span>/3 KRİTİK VURUŞ</p><div class="timing-game" id="timingGame"><div class="hit-zone" id="hitZone"></div><div class="timing-cursor" id="timingCursor"></div></div><button class="primary-button danger-button" id="strikeButton" type="button">ŞİMDİ VUR <span>⚡</span></button><p class="boss-tip" id="bossTip">İmleç parlak alanın içindeyken vur.</p></div></section>
-      <section class="screen finale-screen" id="finaleScreen" aria-labelledby="finaleTitle"><div class="final-collage" id="finalCollage" aria-hidden="true"></div><div class="final-panel"><p class="overline">ZAMAN ÇİZGİSİ // KARARLI</p><h2 id="finaleTitle">GÖREV<br><em>TAMAMLANDI.</em></h2><p id="finaleMessage"></p><div class="final-score"><small>ROTA SKORU</small><strong id="finalScore">0000</strong><span id="finalRank">S</span></div><div class="route-status" id="routeStatus"></div><div class="final-actions"><button class="primary-button" id="otherRouteButton" type="button">DİĞER ROTAYI OYNA <span>→</span></button><button class="secondary-button" id="replayRouteButton" type="button">BU ROTAYI TEKRARLA</button></div></div></section>
-      <section class="screen secret-screen" id="secretScreen" aria-labelledby="secretTitle"><div class="secret-photo"><img src="photo.jpg" alt="İnci ve Buğra birlikte"><span>GERÇEK ZAMAN ÇİZGİSİ</span></div><div class="secret-copy"><p class="overline">GİZLİ FİNAL AÇILDI</p><h2 id="secretTitle">İKİ ROTA.<br><em>TEK TAKIM.</em></h2><p>İnci'nin sezgisi ve Buğra'nın cesareti aynı zaman çizgisinde buluştu. Bazı maceralar tek kişiyle başlar; ama en iyi bölümleri iki kişi tamamlar.</p><button class="primary-button" id="secretReplayButton" type="button">YENİ MACERA <span>↺</span></button></div></section>
-    </main>
-    <div class="toast" id="toast" role="status" aria-live="polite"></div><div class="transition-veil" id="transitionVeil" aria-hidden="true"><span>ZAMAN ATLAMASI</span></div>
-  </div>
+        <small>İnci için · sevgiyle hazırlandı</small>
+      </div>
+    </section>
+
+    <section class="near-future" aria-labelledby="futureTitle">
+      <div class="future-collage reveal">
+        <img class="future-one" src="WhatsApp Image 2026-09-03 at 03.39.22 (4).jpeg" alt="İnci ve Buğra'nın birlikte bir anısı">
+        <img class="future-two" src="photo.jpg" alt="İnci ve Buğra parkta birlikte">
+        <span class="photo-tape" aria-hidden="true"></span>
+      </div>
+      <div class="future-copy reveal">
+        <div class="section-number cream">04</div>
+        <p class="eyebrow light">Çok yakında</p>
+        <h2 id="futureTitle">Mesafe artık<br><em>bir gün değil,</em><br>bir saat olacak.</h2>
+        <p>Bir tartışmadan sonra iki ayrı şehirde susmak yerine, yanına gelebilme ihtimalim olacak. Birlikte kahve içmek özel bir organizasyon değil, sıradan bir salı olabilecek.</p>
+        <ul class="future-list">
+          <li><span>01</span> Plansız buluşmalar</li>
+          <li><span>02</span> Telefon kapanınca bitmeyen sohbetler</li>
+          <li><span>03</span> “Keşke burada olsaydın” yerine “geliyorum”</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="final-letter" aria-labelledby="letterTitle">
+      <p class="eyebrow">Son bir şey</p>
+      <h2 id="letterTitle">Senden hemen umutlu olmanı istemiyorum.</h2>
+      <p>Umudu ikimiz için bir süre ben taşıyabilirim. Sen hazır olduğunda, yine birlikte taşırız.</p>
+      <button class="hold-button" id="openLetter" type="button">
+        <span class="hold-fill"></span><span class="hold-copy">Mektubu aç <small>basılı tut</small></span>
+      </button>
+      <div class="letter-card" id="letterCard" aria-hidden="true">
+        <button class="letter-close" id="closeLetter" type="button" aria-label="Mektubu kapat">×</button>
+        <p class="letter-date">Rize'den, İnci'ye</p>
+        <h3>Sevgilim,</h3>
+        <p>Uzaklık bizi yordu; bunu değiştiremiyorum. Ama bu yorgunluğun hikâyemizin sonu olmasına izin vermek istemiyorum.</p>
+        <p>Ankara'ya geldiğimde her şey bir anda kusursuz olmayacak. Yine anlaşamadığımız anlar olacak. Fakat bu kez sana ulaşmak için günleri değil, sadece yolu sayacağım.</p>
+        <p>Seni ikna etmeye değil; yanında kalmaya, dinlemeye ve yeniden güvenli hissettirmeye geliyorum. Acele etmeden. Baskı kurmadan. Birlikte.</p>
+        <p class="signature">Seni seviyorum.<br><strong>Buğra</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <footer><p>İnci + Buğra</p><span>Mesafe azalıyor. Biz kalıyoruz.</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
 </html>
